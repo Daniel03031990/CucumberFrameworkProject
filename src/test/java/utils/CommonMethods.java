@@ -61,12 +61,34 @@ public class CommonMethods extends PageInitializer{
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         return wait;
     }
+    public static void clickElement(WebElement element){
+        element.click();
+    }
 
     public static void waitForElementToBeClickable(WebElement element) {
         getWait().until(ExpectedConditions.elementToBeClickable(element));
         element.click();
     }
 
+    public static void clickWithExplicitWait(WebElement element) {
+        waitForElementToBeClickable(element);
+        element.click();
+    }
+
+    public static void selectFromDropDown(WebElement dropDown, int index) {
+        Select sel = new Select(dropDown);
+        sel.selectByIndex(index);
+    }
+
+    public static void selectFromDropDown(WebElement dropDown, String visibleText) {
+        Select sel = new Select(dropDown);
+        sel.selectByVisibleText(visibleText);
+    }
+
+    public static void selectFromDropDown(String value, WebElement dropDown) {
+        Select sel = new Select(dropDown);
+        sel.selectByValue(value);
+    }
 
     public static byte[] takeScreenshot(String fileName) {
 
@@ -97,4 +119,13 @@ public class CommonMethods extends PageInitializer{
 
     }
 
+    public static JavascriptExecutor getJSExecutor() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        return js;
+    }
+
+    public static void jsClick(WebElement element) {
+        getJSExecutor().executeScript("arguments[0].click();", element);
+
+    }
 }

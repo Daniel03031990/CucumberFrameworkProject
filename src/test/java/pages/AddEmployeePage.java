@@ -11,7 +11,7 @@ public class AddEmployeePage extends CommonMethods {
    public WebElement pimButton;
 
     @FindBy(id="menu_pim_addEmployee")
-    public WebElement AddEmployBt;
+    public WebElement addEmployBt;
 
     @FindBy(id="firstName")
     public WebElement firstNameLocator;
@@ -23,27 +23,32 @@ public class AddEmployeePage extends CommonMethods {
     public WebElement lastNameLocator;
 
     @FindBy(id="employeeId")
-    public WebElement IdField;
+    public WebElement idField;
 
     public boolean fieldID(){
-     addEmployeePage.IdField.getText().isEmpty();
+     addEmployeePage.idField.getText().isEmpty();
      return false;
     }
     @FindBy(id="btnSave")
     public WebElement saveBT;
 
     @FindBy(id="personal_txtNICNo")
-    public WebElement IsAdded;
+    public WebElement IsAddes;
 
-    @FindBy(xpath = "//span[@class='validation-error']")
-    public WebElement LasterrorMessage;
+    @FindBy(id="welcome")
+    public WebElement welcomeTX;
 
-    @FindBy(xpath = "//span[@for='firstName']")
-    public WebElement firstNameError;
+    @FindBy(id="empPic")
+    public WebElement isAdded;
 
-    @FindBy(xpath = "//div[@class='message warning fadable']")
-    public WebElement ExistingIdError;
+    @FindBy(xpath = "//span[@for='lastName']")
+    public WebElement lastSpam;
 
+ @FindBy(xpath = "//span[@for='firstName']")
+ public WebElement firstSpam;
+
+ @FindBy(xpath="//div[@class='message warning fadable']")
+ public WebElement iderror;
 
 
 

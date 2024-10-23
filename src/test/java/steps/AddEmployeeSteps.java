@@ -1,82 +1,72 @@
 package steps;
 
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.collections4.functors.IfClosure;
 import org.junit.Assert;
 import utils.CommonMethods;
 import utils.ConfigReader;
+import utils.ExcelReader;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class AddEmployeeSteps extends CommonMethods {
-    @When("user clicks on PIM button")
-    public void user_clicks_on_pim_button() {
-       // addEmployeePage.pimButton.click();
-        waitForElementToBeClickable(addEmployeePage.pimButton);
-    }
-    @When("user clicks on AddEmployee")
-    public void user_clicks_on_add_emploee() {
-        waitForElementToBeClickable(addEmployeePage.AddEmployBt);
-    }
-    @When("user enters employee firstName, middleName and lastName")
-    public void user_enters_employee_first_name_middle_name_and_last_name() throws IOException {
-        sendText(ConfigReader.read("firstname"),addEmployeePage.firstNameLocator);
-        sendText(ConfigReader.read("middlename"), addEmployeePage.middleNameLocator);
-        sendText(ConfigReader.read("lastname"), addEmployeePage.lastNameLocator);
 
-
-
-        
+    @Then("user is navigated to dashboard page")
+    public void user_is_navigated_to_dashboard_page() {
+        Assert.assertTrue(addEmployeePage.welcomeTX.isDisplayed());
     }
-    @Then("employee id is generated automatically")
-    public void employee_id_is_generated_automaticaly() {
-        addEmployeePage.IdField.isDisplayed();
+    @When("user adds Employee firsname, middlename and lastname")
+    public void user_adds_employee_firsname_middlename_and_lastname() throws IOException {
+        List<Map<String, String>> newEmployees= ExcelReader.read();
+        for (Map<String, String> employee:newEmployees){
+            addEmployeePage.firstNameLocator.sendKeys(employee.get("firstName"));
+            addEmployeePage.middleNameLocator.sendKeys(employee.get("middleName"));
+            addEmployeePage.lastNameLocator.sendKeys(employee.get("lastName"));
+
+        }
 
     }
-
-    @When("user clicks on SaveBt")
-    public void user_clicks_on_save_bt() {
+    @When("user see id was generated automatically")
+    public void user_see_id_was_generated_automatically() {
+        Assert.assertNotNull(addEmployeePage.idField);
+    }
+    @When("user clicks on save button")
+    public void user_clicks_on_save_button() {
         waitForElementToBeClickable(addEmployeePage.saveBT);
     }
-
-
-    @Then("employee is added successfully")
-    public void employee_is_added_succesfully() {
-       addEmployeePage.IsAdded.isDisplayed();
+    @Then("user is able to add new employee")
+    public void user_is_able_to_add_new_employee() {
+        Assert.assertTrue(addEmployeePage.isAdded.isDisplayed());
     }
-
-    @When("user clears Id field and enters new id")
-    public void user_clears_id_field_and_enters_new_id() throws IOException {
-        addEmployeePage.IdField.clear();
-       sendText(ConfigReader.read("userId"), addEmployeePage.IdField);
-       ConfigReader.incrementUserId();
+    @When("user clear an adds id number")
+    public void user_clear_an_adds_id_number() {
+       String uniqId=addEmployeePage.idField.getText();
+       addEmployeePage.idField.sendKeys(uniqId);
     }
-    @When("user enters employee firstName")
-    public void user_enters_employee_first_name() throws IOException {
-        sendText(ConfigReader.read("firstname"),addEmployeePage.firstNameLocator);
-    }
-    @Then("lastName error is displayed")
-    public void last_name_error_is_displayed() {
-        addEmployeePage.LasterrorMessage.isDisplayed();
-    }
-    @When("user enters employee lastname")
-    public void user_enters_employee_lastname() throws IOException {
-        sendText(ConfigReader.read("lastname"), addEmployeePage.lastNameLocator);
-    }
-    @Then("the firstname error is displayed")
-    public void the_firstname_error_is_displayed() {
-        addEmployeePage.firstNameError.isDisplayed();
+    @Given("user adds Employee {string}, {string} and {string}")
+    public void user_adds_employee_and(String firstname, String middlename, String lastname) {
+      sendText(firstname, addEmployeePage.firstNameLocator);
+      sendText(middlename, addEmployeePage.middleNameLocator);
+      sendText(lastname, addEmployeePage.lastNameLocator);
 
     }
-    @When("user enters existing IdNumber")
-    public void user_enters_existing_id_number() throws IOException {
-        sendText(ConfigReader.read("existingUserid"), addEmployeePage.IdField);
-
+    @Then("user see can see error message in missing field")
+    public void user_see_can_see_error_message_in_missing_field() {
+       boolean isTrue=addEmployeePage.firstNameLocator.isDisplayed() || addEmployeePage.lastSpam.isDisplayed();
+       Assert.assertTrue(isTrue);
+        }
+    @When("user adds existing ID number {string}")
+    public void user_adds_existing_id_number(String existingID) {
+        sendText(existingID, addEmployeePage.idField);
     }
-    @Then("existing id error is displayed")
-    public void existing_id_error_is_displayed() {
-        addEmployeePage.ExistingIdError.isDisplayed();
-
+    @Then("user can see existing id error")
+    public void user_can_see_existing_id_error() {
+        addEmployeePage.iderror.isDisplayed();
+    }
     }
 
 
@@ -84,4 +74,7 @@ public class AddEmployeeSteps extends CommonMethods {
 
 
 
-}
+
+
+    
+

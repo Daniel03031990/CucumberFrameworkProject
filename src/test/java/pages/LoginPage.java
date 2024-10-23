@@ -23,18 +23,6 @@ public class LoginPage extends CommonMethods {
     @FindBy(id="txtUsername")
     public WebElement userField;
 
-    @FindBy(xpath = "//div[@id='divLoginButton']")
-    public WebElement errorMessageParent;
-
-    @FindBy(id="divLoginButton")
-    public WebElement errorMessage;
-
-    public boolean isLocatedNearLoginBt(){
-        errorMessageParent.equals(errorMessage);
-        return true;
-    }
-
-
 
     public LoginPage(){
         PageFactory.initElements(driver,this);

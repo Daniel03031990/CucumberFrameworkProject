@@ -2,20 +2,28 @@ package steps;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import org.openqa.selenium.chrome.ChromeDriver;
 import utils.CommonMethods;
 
 import java.time.Duration;
 
 public class Hooks extends CommonMethods {
-
-
     @Before
     public void start(){
         openBrowserAndLaunchApplication();
     }
     @After
-    public void end(){
+    public void end(Scenario scenario){
+        byte[] pic = new byte[0];
+        if(scenario.isFailed()){
+            takeScreenshot("failed/"+scenario.getName());
+        }else{
+            pic=takeScreenshot("passed/"+scenario.getName());
+        }
+        scenario.attach(pic,"image/png",scenario.getName());
+        // driver.quit();
         closeBrowser();
+
     }
 }
