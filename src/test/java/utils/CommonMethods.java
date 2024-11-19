@@ -3,6 +3,7 @@ package utils;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,7 +26,10 @@ public class CommonMethods extends PageInitializer{
 
             switch (ConfigReader.read("browser")) {
                 case "Chrome":
-                    driver = new ChromeDriver();
+                    ChromeOptions options=new ChromeOptions();
+                    options.setHeadless(true);
+                    driver = new ChromeDriver(options);
+                    // driver = new ChromeDriver();  We comment it because we are using jenkins now
                     break;
                 case "FireFox":
                     driver = new FirefoxDriver();
