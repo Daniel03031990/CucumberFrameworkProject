@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.syntax</groupId>
-    <artifactId>CucumberPractice2</artifactId>
+    <artifactId>CucumberFrameworkProject</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

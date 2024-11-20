@@ -9,21 +9,21 @@ Feature: Add employee for HRMs portal
     And user clicks on AddEmploee
     Then user can see AddEmployee option
 
-  @withoutID
+  @withoutID @id
    Scenario: Add employee without id system should generate ID automatically
  When user adds Employee firsname, middlename and lastname
  And user see id was generated automatically
  And user clicks on save button
  Then user is able to add new employee
 
-    @withId
+    @withId @id
    Scenario: Add employee with Id number
       When user adds Employee firsname, middlename and lastname
       And user clear an adds id number
       And user clicks on save button
       Then user is able to add new employee
 
-      @emptyFields
+      @emptyFields @id
 Scenario Outline:
         Given user adds Employee "<firsname>", "<middlename>" and "<lastname>"
         And user clicks on save button
@@ -32,10 +32,10 @@ Scenario Outline:
           | firsname | middlename | lastname |
           |  adam    | ms         |          |
           |          | ms         | george   |
-          |  cazan   | ms         | george   |
+          |          | ms         | george   |
 
 
-        @existingID
+        @existingID @id
         Scenario: existing Id log in
           When user adds Employee firsname, middlename and lastname
           And user adds existing ID number "15258329"
